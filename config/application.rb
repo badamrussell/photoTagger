@@ -59,6 +59,8 @@ module PhotoTagger
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.paths << "app/assets/templates"
+
     config.generators do |g|
       g.orm :active_record
       g.template_engine :erb
