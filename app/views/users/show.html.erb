@@ -1,3 +1,24 @@
 <h1><%= @user.username %></h1>
 
 <p>Hello, dear user!</p>
+
+<div id="cat_list">
+
+</div>
+
+<script>
+// var myPhoto = new Photo({
+//   url: "http://placekitten.com/50/100",
+//   title: "cat pic 1"
+// });
+//
+// myPhoto.create(function(response) {
+//   $('#cat_list').append('<img src="' + response.url + '">');
+// });
+Photo.fetchByUserId(1,function(photoArray) {
+  _.each(photoArray, function(photo) {
+    $('#cat_list').append('<img src="' + photo.url + '">');
+  });
+});
+
+</script>

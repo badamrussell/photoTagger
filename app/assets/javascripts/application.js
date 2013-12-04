@@ -67,24 +67,29 @@ var Photo = function(attributes) {
 
   this.create = function(callback) {
     var thisPhoto = this;
-
-    $.ajax {
+    console.log("photoObject:",this);
+    $.ajax({
       url: "/api/photos",
       type: "POST",
-      data: this,
+      data: {photo: {url: thisPhoto.url, title: thisPhoto.title}},
       success: function(resp) {
         console.log("CREATE SUCCESS:",resp);
         _.extend(thisPhoto, resp);
+        Photo.all.push(thisPhoto);
         callback(resp);
+      },
+      error: function(resp, err, message) {
+        console.log("CREATE ERROR", resp, err, message);
       }
-    }
+    })
+
   };
 
   this.save = function(callback) {
     var thisPhoto = this;
-
+    console.log("SAVE...");
     if (photo.id) {
-      $.ajax {
+      $.ajax({
         url: "/api/photos/" + photo.id,
         type: "PUT",
         data: this,
@@ -92,11 +97,42 @@ var Photo = function(attributes) {
           console.log("SAVE SUCCESS:",resp);
           _.extend(thisPhoto, resp);
           callback(resp)
+        },
+        error: function(resp, err, message) {
+          console.log("SAVE ERROR", resp, err, message);
         }
-      }
+      })
     } else {
       this.create(callback);
     }
   };
+
+
 }
+
+_.extend(Photo, {
+  fetchByUserId: function(userId, callback) {
+    $.ajax({
+      url: "/api/users/" + userId + "/photos",
+      type: "GET",
+      success: function(photosResponse) {
+        console.log("FETCH SUCCESS", photosResponse);
+        //assume photosResponse is an array of ....
+        var userPhotos = [];
+
+        _.each(photosResponse, function(photoData) {
+          userPhotos.push(new Photo(photoData));
+        });
+
+        callback(userPhotos);
+      },
+      error: function(resp, err, message) {
+        console.log("FETCH ERROR", resp, err, message);
+      }
+    });
+  },
+
+  all: [],
+
+})
 
