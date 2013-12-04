@@ -22,6 +22,8 @@
 //
 //= require_tree .
 
+PT = {};
+
 _.extend(PT, {
   initialize:   function () {
     PT.Photo.fetchByUserId(CURRENT_USER_ID, function () {
@@ -47,3 +49,54 @@ _.extend(PT, {
     content.append(photoFormView.render().$el);
   },
 });
+
+var POJO = function(attributes) {
+
+}
+
+var Photo = function(attributes) {
+  _.extend(this, attributes)
+
+  this.get = function(attr_name) {
+    return this[attr_name];
+  };
+
+  this.set = function(attr_name, val) {
+    this[attr_name] = val;
+  };
+
+  this.create = function(callback) {
+    var thisPhoto = this;
+
+    $.ajax {
+      url: "/api/photos",
+      type: "POST",
+      data: this,
+      success: function(resp) {
+        console.log("CREATE SUCCESS:",resp);
+        _.extend(thisPhoto, resp);
+        callback(resp);
+      }
+    }
+  };
+
+  this.save = function(callback) {
+    var thisPhoto = this;
+
+    if (photo.id) {
+      $.ajax {
+        url: "/api/photos/" + photo.id,
+        type: "PUT",
+        data: this,
+        success: function(resp) {
+          console.log("SAVE SUCCESS:",resp);
+          _.extend(thisPhoto, resp);
+          callback(resp)
+        }
+      }
+    } else {
+      this.create(callback);
+    }
+  };
+}
+
