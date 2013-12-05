@@ -19,12 +19,9 @@ PT.PhotoDetailView = function(photo) {
   };
 
   this.popTagSelectView = function(event) {
+    console.log(">",this.photo)
     var tagBox = new PT.TagSelectView(this.photo, event);
     tagBox.render();
-
-    console.log("users", PT.USERS);
-    var tagUsers = new PT.TagSelectView(this.photo, event);
-    tagUsers.render();
   };
 
   this.$el.on("click", "img", this.popTagSelectView.bind(this));

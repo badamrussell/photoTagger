@@ -1,7 +1,5 @@
-
-
 <ul class="tag-options">
-  <% _.each(JSON.parse($("#bootstrapped_users_json").html()), function(user) { %>
-    <li> <%= user.username %> </li>
+  <% _.each(users, function(user) { %>
+    <li data-id="<%= user.id %>"> <%= user.username %> </li>
   <% }); %>
 </ul>
