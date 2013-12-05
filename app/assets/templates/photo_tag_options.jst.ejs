@@ -1,0 +1,7 @@
+
+
+<ul class="tag-options">
+  <% _.each(JSON.parse($("#bootstrapped_users_json").html()), function(user) { %>
+    <li> <%= user.username %> </li>
+  <% }); %>
+</ul>

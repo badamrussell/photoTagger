@@ -2,6 +2,12 @@
 <div id="content">
 </div>
 
+
+<script type="application/json" id="bootstrapped_users_json">
+  <%= User.all.to_json.html_safe %>
+</script>
+
+
 <script>
 $(function() {
   CURRENT_USER_ID = 1;

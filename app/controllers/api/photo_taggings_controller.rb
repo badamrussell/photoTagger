@@ -24,6 +24,13 @@ class Api::PhotoTaggingsController < ApplicationController
   private
   def require_owner_user!
     # TODO: really should give permission error!
+    puts" ------------------------------ "
+    puts current_user.id
+    puts params
+
+    puts Photo.find(params[:photo_tagging][:photo_id]).owner_id
+
+    puts "+++++++++++++++++++++++++++++++++++"
     unless current_user.id == Photo.find(params[:photo_tagging][:photo_id]).owner_id
       redirect_to user_url(current_user)
     end
